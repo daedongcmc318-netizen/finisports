@@ -35,6 +35,27 @@ function getYouTubeId(url: string): string | null {
   return match ? match[1] : null;
 }
 
+function getGoogleDriveId(url: string): string | null {
+  const patterns = [
+    /drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/,
+    /drive\.google\.com\/open\?id=([a-zA-Z0-9_-]+)/,
+    /drive\.google\.com\/uc\?(?:export=\w+&)?id=([a-zA-Z0-9_-]+)/,
+  ];
+  for (const re of patterns) {
+    const m = url.match(re);
+    if (m) return m[1];
+  }
+  return null;
+}
+
+function getEmbedUrl(url: string): string | null {
+  const ytId = getYouTubeId(url);
+  if (ytId) return `https://www.youtube.com/embed/${ytId}`;
+  const gdId = getGoogleDriveId(url);
+  if (gdId) return `https://drive.google.com/file/d/${gdId}/preview`;
+  return null;
+}
+
 export default function GuidePageTemplate({
   category,
   categoryKey,
@@ -111,15 +132,16 @@ export default function GuidePageTemplate({
             ) : videos.length > 0 ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {videos.map((v) => {
-                  const ytId = v.youtube_url ? getYouTubeId(v.youtube_url) : null;
+                  const embedUrl = v.youtube_url ? getEmbedUrl(v.youtube_url) : null;
                   return (
                     <div key={v.id} className="bg-gray-50 rounded-2xl overflow-hidden border border-gray-100">
-                      {ytId ? (
+                      {embedUrl ? (
                         <div className="relative aspect-video">
                           <iframe
-                            src={`https://www.youtube.com/embed/${ytId}`}
+                            src={embedUrl}
                             className="absolute inset-0 w-full h-full"
                             allowFullScreen
+                            allow="autoplay; encrypted-media"
                             loading="lazy"
                             title={v.title}
                           />
