@@ -96,7 +96,7 @@ export default function LocationPage() {
                     </div>
                     <div>
                       <p className="text-sm text-gray-400 mb-0.5">{t.aboutLocation.phoneLabel}</p>
-                      <p className="font-bold text-lg text-primary">1899-0063</p>
+                      <p className="font-bold text-lg text-primary">031-846-7187</p>
                     </div>
                   </div>
                   <div className="flex gap-4">
