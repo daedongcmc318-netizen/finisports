@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import ScrollProgress from "@/components/ScrollProgress";
 import Hero from "@/components/Hero";
 import PainPoints from "@/components/PainPoints";
 import Solution from "@/components/Solution";
@@ -12,6 +13,7 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <>
+      <ScrollProgress />
       <Header />
       <main>
         <Hero />

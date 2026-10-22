@@ -1,6 +1,7 @@
 "use client";
 
 import { useLang } from "@/i18n";
+import Reveal from "./Reveal";
 
 const ICONS = [
   <svg key="quality" className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -20,24 +21,30 @@ export default function Solution() {
   return (
     <section className="py-24 md:py-32 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <p className="text-sm font-semibold text-primary tracking-widest text-center mb-3 uppercase">
-          {t.solution.badge}
-        </p>
-        <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-16">
-          {t.solution.title} <span className="text-primary">{t.solution.titleHighlight}</span>
-        </h2>
+        <Reveal>
+          <p className="text-sm font-semibold text-primary tracking-widest text-center mb-3 uppercase">
+            {t.solution.badge}
+          </p>
+        </Reveal>
+        <Reveal delay={100}>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-16">
+            {t.solution.title} <span className="text-primary">{t.solution.titleHighlight}</span>
+          </h2>
+        </Reveal>
 
         <div className="grid md:grid-cols-3 gap-8 md:gap-12">
           {t.solution.values.map((v, i) => (
-            <div key={i} className="text-center group">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
-                {ICONS[i]}
+            <Reveal key={i} delay={i * 140} y={28}>
+              <div className="text-center group">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 text-primary mb-6 group-hover:bg-primary group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 transition-all duration-500">
+                  {ICONS[i]}
+                </div>
+                <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">{v.title}</h3>
+                <p className="text-gray-500 leading-relaxed whitespace-pre-line text-sm md:text-base">
+                  {v.desc}
+                </p>
               </div>
-              <h3 className="text-xl font-bold mb-3">{v.title}</h3>
-              <p className="text-gray-500 leading-relaxed whitespace-pre-line text-sm md:text-base">
-                {v.desc}
-              </p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
